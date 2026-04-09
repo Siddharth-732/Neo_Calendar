@@ -96,11 +96,122 @@ h1, h2, h3 {
   box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
 }
 
-.calendar-main {
+/* ── Flip Stage ── */
+.flip-stage {
+  /* Forward default: perspective from BELOW so rotateX(+) = bottom lifts toward viewer */
+  perspective: 1400px;
+  perspective-origin: 50% 150%;
+  border-radius: 0 0 12px 12px;
+  position: relative;
+  background: #f8f7f4;
+}
+
+/* Backward: perspective from ABOVE so page sweeps DOWN toward viewer (over the calendar) */
+.flip-stage.going-backward {
+  perspective-origin: 50% -150%;
+}
+
+/* Pre-rendered destination page — sits beneath the animated page */
+.page-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border-radius: 0 0 12px 12px;
+  pointer-events: none;
+}
+
+/* Decorative paper-texture lines on the backing */
+.flip-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(1.6rem - 1px),
+    rgba(0,0,0,0.04) calc(1.6rem - 1px),
+    rgba(0,0,0,0.04) 1.6rem
+  );
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 0 0 12px 12px;
+}
+
+.calendar-main {
+  display: flex;
+  flex-direction: column;
+  /* Hinge at the TOP — spiral ring edge */
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  /* Hide the back face so when page is rotated away, it's invisible (not see-through) */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+  /* Fold-shadow overlay via ::after */
+}
+
+/* The fold-shadow darkens the page as it rotates to simulate the crease */
+.calendar-main::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  z-index: 100;
+  transition: background 0.15s ease;
+  border-radius: 0 0 12px 12px;
+}
+
+.calendar-main.flip-forward::after,
+.calendar-main.flip-backward::after {
+  animation: foldShadow 0.65s ease forwards;
+}
+
+@keyframes foldShadow {
+  0%   { background: rgba(0,0,0,0); }
+  45%  { background: rgba(0,0,0,0.18); }
+  55%  { background: rgba(0,0,0,0.18); }
+  100% { background: rgba(0,0,0,0); }
+}
+
+/*
+  Forward (→): current page lifts ONCE and disappears.
+  The backdrop (next month) is already showing beneath.
+  No return journey — removes the double-flip.
+  At 90deg the page is edge-on (invisible via backface-visibility:hidden),
+  then JS strips the class → element snaps to 0deg with new content (seamless, invisible snap).
+*/
+@keyframes flipForward {
+  0%   { transform: rotateX(0deg); }
+  100% { transform: rotateX(90deg); }
+}
+
+.calendar-main.flip-forward {
+  animation: flipForward 0.42s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+/*
+  Backward (←): page comes FROM BEHIND the spiral rings and sweeps DOWN over the calendar.
+  - perspective-origin is above (.going-backward class on flip-stage)
+  - Start at rotateX(-90deg): page is perpendicular, folded straight up behind the spiral
+  - End at rotateX(0deg): page lays flat over the calendar
+  - From viewer's angle (looking slightly down at screen) this looks like
+    the page descending FORWARD and OVER the calendar face.
+*/
+@keyframes flipBackward {
+  0%   { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+.calendar-main.flip-backward {
+  animation: flipBackward 0.68s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* ── Hero Image (full width) ── */
@@ -473,4 +584,31 @@ h1, h2, h3 {
 .notes-line {
   height: 1px;
   border-radius: 2px;
+}
+
+/* ── Nav Arrows ── */
+.nav-arrow {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #ddd;
+  background: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #555;
+}
+
+.nav-arrow:hover:not(:disabled) {
+  border-color: #aaa;
+  background: #f5f5f5;
+  transform: scale(1.08);
+}
+
+.nav-arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
