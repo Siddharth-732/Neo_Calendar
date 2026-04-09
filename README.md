@@ -1,6 +1,3 @@
-# Neo Calendar
-
-![April Theme Image](public/april.jpg)
 
 **Neo Calendar** is a premium, physically-inspired digital desk calendar built with **Next.js**, **Tailwind CSS 4**, and **Lucide React**. It combines modern anime-inspired aesthetics with the tactile feel of a traditional desk calendar, featuring realistic 3D page-flip animations and unique monthly themes.
 
