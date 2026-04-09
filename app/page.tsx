@@ -4,18 +4,18 @@ import { useState, useMemo, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 const THEMES = [
-  { month: 'January',  accent: '#a5f3fc', image: '/april.jpg', quote: '"Snow is the silent companion of the determined soul."' },
-  { month: 'February', accent: '#fbcfe8', image: '/may.jpg',   quote: '"In the garden of friendship, the plum blossom blooms first."' },
-  { month: 'March',    accent: '#bbf7d0', image: '/june.jpg',  quote: '"Spring awakens the fire that burns within the heart."' },
-  { month: 'April',    accent: '#4ecdc4', image: '/april.jpg', quote: '"If you were told to believe, you shouldn\'t have to think of anything else!"' },
-  { month: 'May',      accent: '#ff6b6b', image: '/may.jpg',   quote: '"You are so lucky to have such an easy head to say that this is easy."' },
-  { month: 'June',     accent: '#f7b731', image: '/june.jpg',  quote: '"Even if you stop in your tracks and cower, you\'re not stopping the flow of time."' },
-  { month: 'July',     accent: '#fb923c', image: '/april.jpg', quote: '"The heat of battle is nothing compared to the warmth of a steady spirit."' },
-  { month: 'August',   accent: '#fde047', image: '/may.jpg',   quote: '"Let your conviction be your shield under the summer sun."' },
-  { month: 'September',accent: '#c084fc', image: '/june.jpg',  quote: '"The harvest of strength begins with the seeds of discipline."' },
-  { month: 'October',  accent: '#fbbf24', image: '/april.jpg', quote: '"As leaves fall, the true character of the branch is revealed."' },
-  { month: 'November', accent: '#94a3b8', image: '/may.jpg',   quote: '"The cold wind only strengthens the flame that refuses to die."' },
-  { month: 'December', accent: '#3b82f6', image: '/june.jpg',  quote: '"The end of the journey is just the bridge to the next beginning."' },
+  { month: 'January',  accent: '#0e7490', image: '/april.jpg', quote: '"Snow is the silent companion of the determined soul."' },
+  { month: 'February', accent: '#be185d', image: '/may.jpg',   quote: '"In the garden of friendship, the plum blossom blooms first."' },
+  { month: 'March',    accent: '#15803d', image: '/june.jpg',  quote: '"Spring awakens the fire that burns within the heart."' },
+  { month: 'April',    accent: '#0f9d8e', image: '/april.jpg', quote: '"If you were told to believe, you shouldn\'t have to think of anything else!"' },
+  { month: 'May',      accent: '#dc2626', image: '/may.jpg',   quote: '"You are so lucky to have such an easy head to say that this is easy."' },
+  { month: 'June',     accent: '#d97706', image: '/june.jpg',  quote: '"Even if you stop in your tracks and cower, you\'re not stopping the flow of time."' },
+  { month: 'July',     accent: '#ea580c', image: '/april.jpg', quote: '"The heat of battle is nothing compared to the warmth of a steady spirit."' },
+  { month: 'August',   accent: '#ca8a04', image: '/may.jpg',   quote: '"Let your conviction be your shield under the summer sun."' },
+  { month: 'September',accent: '#7c3aed', image: '/june.jpg',  quote: '"The harvest of strength begins with the seeds of discipline."' },
+  { month: 'October',  accent: '#b45309', image: '/april.jpg', quote: '"As leaves fall, the true character of the branch is revealed."' },
+  { month: 'November', accent: '#475569', image: '/may.jpg',   quote: '"The cold wind only strengthens the flame that refuses to die."' },
+  { month: 'December', accent: '#1d4ed8', image: '/june.jpg',  quote: '"The end of the journey is just the bridge to the next beginning."' },
 ];
 
 const WEEK_DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -100,7 +100,10 @@ function CalendarSnapshot({ date }: { date: Date }) {
             ))}
             {calendarDays.map((day, i) => {
               const isSun = i % 7 === 0;
-              const isToday = day.num === 14;
+              const todayObj = new Date();
+              const isToday = day.num === todayObj.getDate()
+                && monthIdx === todayObj.getMonth()
+                && year === todayObj.getFullYear();
               return (
                 <div
                   key={day.num ? `b-${day.num}-${monthIdx}` : `b-empty-${i}`}
@@ -125,8 +128,9 @@ function CalendarSnapshot({ date }: { date: Date }) {
 
 // ─── Main calendar page ────────────────────────────────────────────────────────
 export default function CalendarPage() {
-  const [currentDate, setCurrentDate] = useState(new Date(2024, 3, 1));
-  const [displayDate, setDisplayDate] = useState(new Date(2024, 3, 1));
+  const today = new Date();
+  const [currentDate, setCurrentDate] = useState(today);
+  const [displayDate, setDisplayDate] = useState(today);
   const [backdropDate, setBackdropDate] = useState<Date | null>(null);
   const [selectedDate, setSelectedDate] = useState<number | null>(null);
   const [notes, setNotes] = useState<Record<string, string>>({});
@@ -324,7 +328,10 @@ export default function CalendarPage() {
                   ))}
                   {calendarDays.map((day, i) => {
                     const isSun = i % 7 === 0;
-                    const isToday = day.num === 14;
+                    const todayObj = new Date();
+                    const isToday = day.num === todayObj.getDate()
+                      && monthIdx === todayObj.getMonth()
+                      && year === todayObj.getFullYear();
                     const isSelected = selectedDate === day.num && day.isCurrentMonth;
                     return (
                       <div
