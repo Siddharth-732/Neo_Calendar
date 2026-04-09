@@ -320,6 +320,12 @@ h1, h2, h3 {
   padding-bottom: 0.5rem;
 }
 
+/* ── Day cells: three-layer system ─────────────────────────────────────────
+   Layer 1: .range-strip   — coloured background band (full / half / hover)
+   Layer 2: .day-circle    — selection circle on top
+   Layer 3: .day-text      — the number, always on top
+   ──────────────────────────────────────────────────────────────────────── */
+
 .day-num {
   display: flex;
   align-items: center;
@@ -327,18 +333,69 @@ h1, h2, h3 {
   height: 36px;
   font-size: 0.95rem;
   color: #333;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
-.day-num.muted {
-  color: #ccc;
+.day-num.muted { color: #ccc; }
+
+/* Range-capable cell */
+.day-num.range-cell {
+  position: relative;
+  cursor: pointer;
+  border-radius: 0;
+  overflow: visible;
 }
 
-.day-num.today {
-  color: white;
-  background: var(--accent-april); /* Dynamic */
+.day-num.range-cell:hover .day-circle {
+  background: rgba(0,0,0,0.06) !important;
+}
+
+/* ── Strip layer ── */
+.range-strip {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 28px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  border-radius: 0;
+  transition: background 0.15s ease;
+}
+
+/* Only right half (start of range) */
+.day-num.strip-right .range-strip { left: 50%; border-radius: 14px 0 0 14px; }
+
+/* Only left half (end of range) */
+.day-num.strip-left  .range-strip { right: 50%; border-radius: 0 14px 14px 0; }
+
+/* Full width (in-range days) */
+.day-num.strip-full  .range-strip { left: 0; right: 0; border-radius: 0; }
+
+/* Hover preview (light dashed look via low opacity) */
+.day-num.strip-hover .range-strip { left: 0; right: 0; border-radius: 0; opacity: 0.75; }
+.day-num.strip-hover-end .range-strip { left: 50%; border-radius: 14px 0 0 14px; opacity: 0.75; }
+
+/* ── Circle layer ── */
+.day-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  font-weight: 700;
+  pointer-events: none;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  z-index: 1;
+}
+
+/* ── Text layer ── */
+.day-text {
+  position: relative;
+  z-index: 2;
+  line-height: 1;
+  user-select: none;
 }
 
 .quote-section {
