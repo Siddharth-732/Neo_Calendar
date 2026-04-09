@@ -1,0 +1,476 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  --background: #f8fafc;
+  --foreground: #1e293b;
+  --card-bg: #ffffff;
+  --accent-april: #0d9488;
+  --accent-may: #e11d48;
+  --accent-june: #ea580c;
+  --text-muted: #64748b;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: var(--background);
+  background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+  background-size: 40px 40px;
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+h1, h2, h3 {
+  font-family: 'Outfit', sans-serif;
+}
+
+.calendar-container {
+  perspective: 1000px;
+  width: 100%;
+  max-width: 1100px;
+  padding: 2rem;
+}
+
+.calendar-card {
+  background: white;
+  color: #333;
+  border-radius: 12px;
+  height: auto;
+  min-height: 600px;
+  box-shadow: 
+    0 40px 100px -20px rgba(0, 0, 0, 0.1),
+    0 20px 40px -15px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  position: relative;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+
+/* ── Top Rings Bar ── */
+.rings-bar {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  background-size: cover;
+  background-position: center top;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.rings-bar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.spiral {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 20px;
+  z-index: 20;
+}
+
+.spiral-ring {
+  width: 4px;
+  height: 28px;
+  background: linear-gradient(to bottom, #e5e7eb, #6b7280);
+  border-radius: 10px;
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+}
+
+.calendar-main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+}
+
+/* ── Hero Image (full width) ── */
+.calendar-hero {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.55) 100%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.hero-overlay {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 2rem;
+  z-index: 20;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.hero-month {
+  font-size: 3.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  line-height: 1;
+  font-family: 'Outfit', sans-serif;
+}
+
+.hero-year {
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Outfit', sans-serif;
+}
+
+/* ── Bottom row ── */
+.calendar-bottom {
+  display: flex;
+  flex: 1;
+}
+
+/* Notes column (left) */
+.calendar-notes-col {
+  width: 42%;
+  padding: 1.5rem 1.5rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #f0f0f0;
+  background: #fafaf8;
+}
+
+/* Calendar grid column (right) */
+.calendar-grid-col {
+  flex: 1;
+  padding: 1.5rem 2rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background: #fdfdfd;
+}
+
+.grid-month-label {
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: 'Outfit', sans-serif;
+  line-height: 1;
+}
+
+.month-year-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.year-num {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: #aaa;
+  font-family: 'Outfit', sans-serif;
+  margin-top: 2px;
+}
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.day-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #666;
+  padding-bottom: 0.5rem;
+}
+
+.day-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  font-size: 0.95rem;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.day-num.muted {
+  color: #ccc;
+}
+
+.day-num.today {
+  color: white;
+  background: var(--accent-april); /* Dynamic */
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.quote-section {
+  margin-top: auto;
+  font-style: italic;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #555;
+  border-left: 4px solid #eee;
+  padding-left: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+/* ── Stacked Pages ── */
+.pages-stack {
+  position: relative;
+  height: 0;          /* stack lives outside the card flow */
+  width: 100%;
+  z-index: 0;
+}
+
+.page-layer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-radius: 0 0 10px 10px;
+  transition: background 0.4s ease;
+}
+
+/* Deepest / furthest back page */
+.page-layer-3 {
+  height: 28px;
+  top: 6px;
+  background: #b0b5be;
+  margin: 0 10px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  z-index: 1;
+}
+
+/* Middle page */
+.page-layer-2 {
+  height: 20px;
+  top: 3px;
+  background: #d2d6de;
+  margin: 0 5px;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  z-index: 2;
+}
+
+/* Top (visible) page edge — thinnest and lightest */
+.page-layer-1 {
+  height: 10px;
+  top: 0;
+  background: #e8eaee;
+  margin: 0 2px;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  z-index: 3;
+}
+
+/* Tiny ruled lines on the page edges to sell the paper feel */
+.page-layer-1::after,
+.page-layer-2::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 1px;
+  background: rgba(0,0,0,0.07);
+  border-radius: 1px;
+}
+
+/* Flex Utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-shrink-0 { flex-shrink: 0; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.justify-between { justify-content: space-between; }
+.items-center { align-items: center; }
+.items-baseline { align-items: baseline; }
+.p-4 { padding: 1rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.rounded-full { border-radius: 9999px; }
+.overflow-x-auto { overflow-x: auto; }
+.absolute { position: absolute; }
+.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+.z-10 { z-index: 10; }
+.bg-white { background-color: #ffffff; }
+.bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
+.text-black { color: #000000; }
+.text-white\/50 { color: rgba(255, 255, 255, 0.5); }
+.font-bold { font-weight: 700; }
+.transition-all { transition-property: all; }
+.duration-300 { transition-duration: 300ms; }
+
+
+/* Selected day styling */
+.day-num.selected {
+  border-radius: 50%;
+  transform: scale(1.1);
+  z-index: 10;
+}
+
+.day-num:not(.muted):hover {
+  background: rgba(0,0,0,0.02);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ── Notes Panel ─────────────────────────────────────────────── */
+.notes-panel {
+  margin-top: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notes-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notes-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.notes-pin {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.notes-panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.notes-back-btn {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  border: 1px solid;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.notes-back-btn:hover {
+  opacity: 0.7;
+}
+
+.notes-char-count {
+  font-size: 0.65rem;
+  color: #bbb;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.2s;
+}
+
+.notes-body {
+  position: relative;
+  border: 1.5px solid;
+  border-radius: 10px;
+  background: #fafaf8;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+  transition: border-color 0.3s ease;
+}
+
+.notes-input {
+  width: 100%;
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background: transparent;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent calc(1.6rem - 1px),
+    #e9ecf0 calc(1.6rem - 1px),
+    #e9ecf0 1.6rem
+  );
+  background-position: 0 0.75rem;
+  line-height: 1.6rem;
+  font-size: 0.88rem;
+  color: #374151;
+  font-family: 'Inter', sans-serif;
+  resize: none;
+  outline: none;
+  display: block;
+  box-sizing: border-box;
+}
+
+.notes-input::placeholder {
+  color: #c8d0db;
+  font-style: italic;
+}
+
+.notes-placeholder-lines {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem 0.75rem;
+  opacity: 0.5;
+}
+
+.notes-line {
+  height: 1px;
+  border-radius: 2px;
+}
