@@ -4,18 +4,18 @@ import { useState, useMemo, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 const THEMES = [
-  { month: 'January',  accent: '#0e7490', image: '/april.jpg', quote: '"Snow is the silent companion of the determined soul."' },
-  { month: 'February', accent: '#be185d', image: '/may.jpg',   quote: '"In the garden of friendship, the plum blossom blooms first."' },
-  { month: 'March',    accent: '#15803d', image: '/june.jpg',  quote: '"Spring awakens the fire that burns within the heart."' },
+  { month: 'January',  accent: '#0e7490', image: '/jan.jpg', quote: '"Snow is the silent companion of the determined soul."' },
+  { month: 'February', accent: '#be185d', image: '/feb.jpg',   quote: '"In the garden of friendship, the plum blossom blooms first."' },
+  { month: 'March',    accent: '#15803d', image: '/march.jpg',  quote: '"Spring awakens the fire that burns within the heart."' },
   { month: 'April',    accent: '#0f9d8e', image: '/april.jpg', quote: '"If you were told to believe, you shouldn\'t have to think of anything else!"' },
   { month: 'May',      accent: '#dc2626', image: '/may.jpg',   quote: '"You are so lucky to have such an easy head to say that this is easy."' },
   { month: 'June',     accent: '#d97706', image: '/june.jpg',  quote: '"Even if you stop in your tracks and cower, you\'re not stopping the flow of time."' },
-  { month: 'July',     accent: '#ea580c', image: '/april.jpg', quote: '"The heat of battle is nothing compared to the warmth of a steady spirit."' },
-  { month: 'August',   accent: '#ca8a04', image: '/may.jpg',   quote: '"Let your conviction be your shield under the summer sun."' },
-  { month: 'September',accent: '#7c3aed', image: '/june.jpg',  quote: '"The harvest of strength begins with the seeds of discipline."' },
-  { month: 'October',  accent: '#b45309', image: '/april.jpg', quote: '"As leaves fall, the true character of the branch is revealed."' },
-  { month: 'November', accent: '#475569', image: '/may.jpg',   quote: '"The cold wind only strengthens the flame that refuses to die."' },
-  { month: 'December', accent: '#1d4ed8', image: '/june.jpg',  quote: '"The end of the journey is just the bridge to the next beginning."' },
+  { month: 'July',     accent: '#ea580c', image: '/july.png', quote: '"The heat of battle is nothing compared to the warmth of a steady spirit."' },
+  { month: 'August',   accent: '#ca8a04', image: '/aug.jpg',   quote: '"Let your conviction be your shield under the summer sun."' },
+  { month: 'September',accent: '#7c3aed', image: '/sep.jpg',  quote: '"The harvest of strength begins with the seeds of discipline."' },
+  { month: 'October',  accent: '#b45309', image: '/oct.png', quote: '"As leaves fall, the true character of the branch is revealed."' },
+  { month: 'November', accent: '#475569', image: '/nov.jpg',   quote: '"The cold wind only strengthens the flame that refuses to die."' },
+  { month: 'December', accent: '#1d4ed8', image: '/dec.png',  quote: '"The end of the journey is just the bridge to the next beginning."' },
 ];
 
 const WEEK_DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -244,7 +244,7 @@ export default function CalendarPage() {
       <div className="calendar-card">
 
         {/* Rings Bar */}
-        <div className="rings-bar" style={{ backgroundImage: `url(${theme.image})` }}>
+        <div className="rings-bar" style={{ backgroundImage: `url(${theme.image}?v=1)` }}>
           <div className="rings-bar-overlay" />
           <div className="spiral">
             {rings.map(i => <div key={i} className="spiral-ring" />)}
