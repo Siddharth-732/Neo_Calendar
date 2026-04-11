@@ -7,7 +7,7 @@ const THEMES = [
   { month: 'January',  accent: '#0e7490', image: '/jan.jpg', quote: '"Snow is the silent companion of the determined soul."' },
   { month: 'February', accent: '#be185d', image: '/feb.jpg',   quote: '"In the garden of friendship, the plum blossom blooms first."' },
   { month: 'March',    accent: '#15803d', image: '/march.jpg',  quote: '"Spring awakens the fire that burns within the heart."' },
-  { month: 'April',    accent: '#0f9d8e', image: '/april.jpg', quote: '"If you were told to believe, you shouldn\'t have to think of anything else!"' },
+  { month: 'April',    accent: '#0f9d8e', image: '/april2.jpg', quote: '"If you were told to believe, you shouldn\'t have to think of anything else!"' },
   { month: 'May',      accent: '#dc2626', image: '/may.jpg',   quote: '"You are so lucky to have such an easy head to say that this is easy."' },
   { month: 'June',     accent: '#d97706', image: '/june.jpg',  quote: '"Even if you stop in your tracks and cower, you\'re not stopping the flow of time."' },
   { month: 'July',     accent: '#ea580c', image: '/july.png', quote: '"The heat of battle is nothing compared to the warmth of a steady spirit."' },

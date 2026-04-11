@@ -218,7 +218,7 @@ h1, h2, h3 {
 .calendar-hero {
   position: relative;
   width: 100%;
-  height: 240px;
+  height: 320px;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -242,7 +242,7 @@ h1, h2, h3 {
 }
 
 .hero-month {
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 3px;
