@@ -29,7 +29,9 @@ body {
   overflow-x: hidden;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Outfit', sans-serif;
 }
 
@@ -46,7 +48,7 @@ h1, h2, h3 {
   border-radius: 12px;
   height: auto;
   min-height: 600px;
-  box-shadow: 
+  box-shadow:
     0 40px 100px -20px rgba(0, 0, 0, 0.1),
     0 20px 40px -15px rgba(0, 0, 0, 0.05),
     0 0 0 1px rgba(0, 0, 0, 0.02);
@@ -93,7 +95,7 @@ h1, h2, h3 {
   height: 28px;
   background: linear-gradient(to bottom, #e5e7eb, #6b7280);
   border-radius: 10px;
-  box-shadow: 1px 2px 6px rgba(0,0,0,0.5);
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* ── Flip Stage ── */
@@ -128,13 +130,11 @@ h1, h2, h3 {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent calc(1.6rem - 1px),
-    rgba(0,0,0,0.04) calc(1.6rem - 1px),
-    rgba(0,0,0,0.04) 1.6rem
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      transparent,
+      transparent calc(1.6rem - 1px),
+      rgba(0, 0, 0, 0.04) calc(1.6rem - 1px),
+      rgba(0, 0, 0, 0.04) 1.6rem);
   pointer-events: none;
   z-index: 0;
   border-radius: 0 0 12px 12px;
@@ -175,10 +175,21 @@ h1, h2, h3 {
 }
 
 @keyframes foldShadow {
-  0%   { background: rgba(0,0,0,0); }
-  45%  { background: rgba(0,0,0,0.18); }
-  55%  { background: rgba(0,0,0,0.18); }
-  100% { background: rgba(0,0,0,0); }
+  0% {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  45% {
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  55% {
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  100% {
+    background: rgba(0, 0, 0, 0);
+  }
 }
 
 /*
@@ -189,8 +200,13 @@ h1, h2, h3 {
   then JS strips the class → element snaps to 0deg with new content (seamless, invisible snap).
 */
 @keyframes flipForward {
-  0%   { transform: rotateX(0deg); }
-  100% { transform: rotateX(90deg); }
+  0% {
+    transform: rotateX(0deg);
+  }
+
+  100% {
+    transform: rotateX(90deg);
+  }
 }
 
 .calendar-main.flip-forward {
@@ -206,8 +222,13 @@ h1, h2, h3 {
     the page descending FORWARD and OVER the calendar face.
 */
 @keyframes flipBackward {
-  0%   { transform: rotateX(-90deg); }
-  100% { transform: rotateX(0deg); }
+  0% {
+    transform: rotateX(-90deg);
+  }
+
+  100% {
+    transform: rotateX(0deg);
+  }
 }
 
 .calendar-main.flip-backward {
@@ -226,7 +247,7 @@ h1, h2, h3 {
 .hero-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.55) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.55) 100%);
   z-index: 10;
   pointer-events: none;
 }
@@ -253,7 +274,7 @@ h1, h2, h3 {
 .hero-year {
   font-size: 1.6rem;
   font-weight: 300;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255, 255, 255, 0.75);
   font-family: 'Outfit', sans-serif;
 }
 
@@ -336,7 +357,9 @@ h1, h2, h3 {
   transition: all 0.15s ease;
 }
 
-.day-num.muted { color: #ccc; }
+.day-num.muted {
+  color: #ccc;
+}
 
 /* Range-capable cell */
 .day-num.range-cell {
@@ -347,7 +370,7 @@ h1, h2, h3 {
 }
 
 .day-num.range-cell:hover .day-circle {
-  background: rgba(0,0,0,0.06) !important;
+  background: rgba(0, 0, 0, 0.06) !important;
 }
 
 /* ── Strip layer ── */
@@ -364,17 +387,37 @@ h1, h2, h3 {
 }
 
 /* Only right half (start of range) */
-.day-num.strip-right .range-strip { left: 50%; border-radius: 14px 0 0 14px; }
+.day-num.strip-right .range-strip {
+  left: 50%;
+  border-radius: 14px 0 0 14px;
+}
 
 /* Only left half (end of range) */
-.day-num.strip-left  .range-strip { right: 50%; border-radius: 0 14px 14px 0; }
+.day-num.strip-left .range-strip {
+  right: 50%;
+  border-radius: 0 14px 14px 0;
+}
 
 /* Full width (in-range days) */
-.day-num.strip-full  .range-strip { left: 0; right: 0; border-radius: 0; }
+.day-num.strip-full .range-strip {
+  left: 0;
+  right: 0;
+  border-radius: 0;
+}
 
 /* Hover preview (light dashed look via low opacity) */
-.day-num.strip-hover .range-strip { left: 0; right: 0; border-radius: 0; opacity: 0.75; }
-.day-num.strip-hover-end .range-strip { left: 50%; border-radius: 14px 0 0 14px; opacity: 0.75; }
+.day-num.strip-hover .range-strip {
+  left: 0;
+  right: 0;
+  border-radius: 0;
+  opacity: 0.75;
+}
+
+.day-num.strip-hover-end .range-strip {
+  left: 50%;
+  border-radius: 14px 0 0 14px;
+  opacity: 0.75;
+}
 
 /* ── Circle layer ── */
 .day-circle {
@@ -412,7 +455,8 @@ h1, h2, h3 {
 /* ── Stacked Pages ── */
 .pages-stack {
   position: relative;
-  height: 0;          /* stack lives outside the card flow */
+  height: 0;
+  /* stack lives outside the card flow */
   width: 100%;
   z-index: 0;
 }
@@ -432,7 +476,7 @@ h1, h2, h3 {
   background: #b0b5be;
   margin: 0 10px;
   border-radius: 0 0 8px 8px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
   z-index: 1;
 }
 
@@ -443,7 +487,7 @@ h1, h2, h3 {
   background: #d2d6de;
   margin: 0 5px;
   border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
   z-index: 2;
 }
 
@@ -454,7 +498,7 @@ h1, h2, h3 {
   background: #e8eaee;
   margin: 0 2px;
   border-radius: 0 0 6px 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
   z-index: 3;
 }
 
@@ -467,34 +511,107 @@ h1, h2, h3 {
   right: 10%;
   top: 50%;
   height: 1px;
-  background: rgba(0,0,0,0.07);
+  background: rgba(0, 0, 0, 0.07);
   border-radius: 1px;
 }
 
 /* Flex Utilities */
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.flex-shrink-0 { flex-shrink: 0; }
-.gap-2 { gap: 0.5rem; }
-.gap-4 { gap: 1rem; }
-.justify-between { justify-content: space-between; }
-.items-center { align-items: center; }
-.items-baseline { align-items: baseline; }
-.p-4 { padding: 1rem; }
-.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-.py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-.rounded-full { border-radius: 9999px; }
-.overflow-x-auto { overflow-x: auto; }
-.absolute { position: absolute; }
-.inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
-.z-10 { z-index: 10; }
-.bg-white { background-color: #ffffff; }
-.bg-white\/5 { background-color: rgba(255, 255, 255, 0.05); }
-.text-black { color: #000000; }
-.text-white\/50 { color: rgba(255, 255, 255, 0.5); }
-.font-bold { font-weight: 700; }
-.transition-all { transition-property: all; }
-.duration-300 { transition-duration: 300ms; }
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-baseline {
+  align-items: baseline;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.text-black {
+  color: #000000;
+}
+
+.text-white\/50 {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.transition-all {
+  transition-property: all;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
 
 
 /* Selected day styling */
@@ -505,7 +622,7 @@ h1, h2, h3 {
 }
 
 .day-num:not(.muted):hover {
-  background: rgba(0,0,0,0.02);
+  background: rgba(0, 0, 0, 0.02);
   border-radius: 50%;
   cursor: pointer;
 }
@@ -513,6 +630,7 @@ h1, h2, h3 {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -550,7 +668,7 @@ h1, h2, h3 {
   height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
 .notes-panel-actions {
@@ -570,6 +688,7 @@ h1, h2, h3 {
   transition: opacity 0.2s;
   font-family: 'Inter', sans-serif;
 }
+
 .notes-back-btn:hover {
   opacity: 0.7;
 }
@@ -600,13 +719,11 @@ h1, h2, h3 {
   padding: 0.75rem 1rem;
   border: none;
   background: transparent;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent calc(1.6rem - 1px),
-    #e9ecf0 calc(1.6rem - 1px),
-    #e9ecf0 1.6rem
-  );
+  background-image: repeating-linear-gradient(to bottom,
+      transparent,
+      transparent calc(1.6rem - 1px),
+      #e9ecf0 calc(1.6rem - 1px),
+      #e9ecf0 1.6rem);
   background-position: 0 0.75rem;
   line-height: 1.6rem;
   font-size: 0.88rem;
