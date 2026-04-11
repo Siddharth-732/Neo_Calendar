@@ -1,13 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700;900&family=Shippori+Mincho:wght@400;500;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@300;400;600;800&display=swap');
+
 
 :root {
-  --background: #f8fafc;
-  --foreground: #1e293b;
-  --card-bg: #ffffff;
-  --accent-april: #0d9488;
-  --accent-may: #e11d48;
-  --accent-june: #ea580c;
-  --text-muted: #64748b;
+  /* ── Washi paper palette ── */
+  --washi:        #f5ede0;   /* aged cream paper */
+  --washi-dark:   #e8dcc8;   /* slightly darker paper */
+  --washi-deep:   #d6c9af;   /* fold / crease tone */
+  --ink:          #1c1815;   /* warm near-black ink */
+  --ink-light:    #4a3f33;   /* medium ink */
+  --ink-faint:    #8c7b68;   /* faint ruling line */
+  --vermillion:   #c0392b;   /* traditional red seal */
+  --vermillion-lt:#e85d4a;   /* lighter vermillion */
+  --indigo:       #1e3a5f;   /* traditional indigo */
+  --gold:         #8b6914;   /* aged gold */
+
+  /* keep old vars for compat */
+  --background:   #ede5d5;
+  --foreground:   #1c1815;
+  --card-bg:      #f9f3e8;
 }
 
 * {
@@ -18,10 +28,13 @@
 
 body {
   background: var(--background);
-  background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
-  background-size: 40px 40px;
+  /* washi paper grain — overlapping noise layers */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 30% 20%, rgba(180,140,80,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(140,100,60,0.06) 0%, transparent 50%);
   color: var(--foreground);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Noto Serif JP', 'Georgia', serif;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -29,10 +42,8 @@ body {
   overflow-x: hidden;
 }
 
-h1,
-h2,
-h3 {
-  font-family: 'Outfit', sans-serif;
+h1, h2, h3 {
+  font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
 }
 
 .calendar-container {
@@ -43,15 +54,15 @@ h3 {
 }
 
 .calendar-card {
-  background: white;
-  color: #333;
-  border-radius: 12px;
+  background: var(--washi);
+  color: var(--ink);
+  border-radius: 4px;            /* flatter corners — traditional block print */
   height: auto;
   min-height: 600px;
   box-shadow:
-    0 40px 100px -20px rgba(0, 0, 0, 0.1),
-    0 20px 40px -15px rgba(0, 0, 0, 0.05),
-    0 0 0 1px rgba(0, 0, 0, 0.02);
+    0 30px 80px -10px rgba(60, 40, 20, 0.28),
+    0 10px 30px -8px rgba(60, 40, 20, 0.18),
+    0 0 0 1px rgba(140, 100, 50, 0.15);
   display: flex;
   flex-direction: column;
   overflow: visible;
@@ -60,8 +71,23 @@ h3 {
   transform-style: preserve-3d;
 }
 
+/* Vermillion left-edge accent — traditional document border */
+.calendar-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: var(--vermillion);
+  border-radius: 4px 0 0 4px;
+  z-index: 10;
+  pointer-events: none;
+}
 
-/* ── Top Rings Bar ── */
+
+
+/* ── Top Binding Bar ── */
 .rings-bar {
   position: relative;
   width: 100%;
@@ -70,14 +96,16 @@ h3 {
   background-position: center top;
   flex-shrink: 0;
   overflow: hidden;
+  border-radius: 4px 4px 0 0;
 }
 
 .rings-bar-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10, 10, 15, 0.55);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  /* warm dark lacquer / aged timber */
+  background: rgba(28, 18, 10, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .spiral {
@@ -90,12 +118,18 @@ h3 {
   z-index: 20;
 }
 
+/* Binding cords — dark bronze/bamboo style */
 .spiral-ring {
-  width: 4px;
-  height: 28px;
-  background: linear-gradient(to bottom, #e5e7eb, #6b7280);
-  border-radius: 10px;
-  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.5);
+  width: 3px;
+  height: 30px;
+  background: linear-gradient(to bottom,
+    #c9a96e 0%,
+    #8b6914 40%,
+    #5c4008 100%);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(255,220,120,0.15);
 }
 
 /* ── Flip Stage ── */
@@ -264,18 +298,20 @@ h3 {
 
 .hero-month {
   font-size: 4rem;
-  font-weight: 800;
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   line-height: 1;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.55), 0 0 40px rgba(200,100,50,0.2);
 }
 
 .hero-year {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 300;
-  color: rgba(255, 255, 255, 0.75);
-  font-family: 'Outfit', sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Noto Serif JP', serif;
+  letter-spacing: 2px;
 }
 
 /* ── Bottom row ── */
@@ -290,8 +326,8 @@ h3 {
   padding: 1.5rem 1.5rem 1.5rem 2rem;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #f0f0f0;
-  background: #fafaf8;
+  border-right: 1px solid var(--washi-deep);
+  background: var(--washi-dark);
 }
 
 /* Calendar grid column (right) */
@@ -300,15 +336,15 @@ h3 {
   padding: 1.5rem 2rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
-  background: #fdfdfd;
+  background: var(--washi);
 }
 
 .grid-month-label {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  font-family: 'Outfit', sans-serif;
+  letter-spacing: 3px;
+  font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
   line-height: 1;
 }
 
@@ -320,11 +356,12 @@ h3 {
 }
 
 .year-num {
-  font-size: 1.1rem;
-  font-weight: 300;
-  color: #aaa;
-  font-family: 'Outfit', sans-serif;
-  margin-top: 2px;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--ink-faint);
+  font-family: 'Noto Serif JP', serif;
+  margin-top: 3px;
+  letter-spacing: 1px;
 }
 
 .days-grid {
@@ -335,10 +372,14 @@ h3 {
 
 .day-label {
   text-align: center;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  color: #666;
-  padding-bottom: 0.5rem;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+  padding-bottom: 0.6rem;
+  font-family: 'Noto Serif JP', serif;
+  border-bottom: 1px solid var(--washi-deep);
+  margin-bottom: 0.25rem;
 }
 
 /* ── Day cells: three-layer system ─────────────────────────────────────────
@@ -352,13 +393,14 @@ h3 {
   align-items: center;
   justify-content: center;
   height: 36px;
-  font-size: 0.95rem;
-  color: #333;
+  font-size: 0.9rem;
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
   transition: all 0.15s ease;
 }
 
 .day-num.muted {
-  color: #ccc;
+  color: var(--washi-deep);
 }
 
 /* Range-capable cell */
@@ -441,15 +483,23 @@ h3 {
   user-select: none;
 }
 
+/* ── Quote — traditional inscription style ── */
 .quote-section {
   margin-top: auto;
   font-style: italic;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #555;
-  border-left: 4px solid #eee;
-  padding-left: 1.5rem;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--ink-light);
+  border-left: 3px solid var(--vermillion);
+  padding-left: 1rem;
+  padding-top: 0.5rem;
   transition: all 0.3s ease;
+  font-family: 'Noto Serif JP', serif;
+  letter-spacing: 0.3px;
+}
+.quote-section p {
+  border-left: none !important; /* override inline style */
+  padding-left: 0 !important;
 }
 
 /* ── Stacked Pages ── */
@@ -469,36 +519,36 @@ h3 {
   transition: background 0.4s ease;
 }
 
-/* Deepest / furthest back page */
+/* Deepest / furthest back page — dark aged washi */
 .page-layer-3 {
   height: 28px;
   top: 6px;
-  background: #b0b5be;
+  background: #c4b49a;
   margin: 0 10px;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 6px 18px rgba(60, 40, 10, 0.25);
   z-index: 1;
 }
 
-/* Middle page */
+/* Middle page — mid-tone aged paper */
 .page-layer-2 {
   height: 20px;
   top: 3px;
-  background: #d2d6de;
+  background: #d9cbb2;
   margin: 0 5px;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 4px 12px rgba(60, 40, 10, 0.18);
   z-index: 2;
 }
 
-/* Top (visible) page edge — thinnest and lightest */
+/* Top visible edge — lightest aged cream */
 .page-layer-1 {
   height: 10px;
   top: 0;
-  background: #e8eaee;
+  background: #ede3cf;
   margin: 0 2px;
-  border-radius: 0 0 6px 6px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 6px rgba(60, 40, 10, 0.12);
   z-index: 3;
 }
 
@@ -655,11 +705,12 @@ h3 {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Noto Serif JP', serif;
   font-size: 0.72rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.5px;
+  color: var(--ink-light);
 }
 
 .notes-pin {
@@ -695,16 +746,17 @@ h3 {
 
 .notes-char-count {
   font-size: 0.65rem;
-  color: #bbb;
-  font-family: 'Inter', sans-serif;
+  color: var(--ink-faint);
+  font-family: 'Noto Serif JP', serif;
+  opacity: 0.7;
   transition: color 0.2s;
 }
 
 .notes-body {
   position: relative;
-  border: 1.5px solid;
-  border-radius: 10px;
-  background: #fafaf8;
+  border: 1px solid var(--washi-deep);
+  border-radius: 2px;          /* sharp — like a traditional block */
+  background: #fdf8ef;         /* faint aged cream */
   overflow: hidden;
   flex: 1;
   display: flex;
@@ -719,16 +771,17 @@ h3 {
   padding: 0.75rem 1rem;
   border: none;
   background: transparent;
+  /* warm sepia ruling lines — like traditional grid paper */
   background-image: repeating-linear-gradient(to bottom,
       transparent,
       transparent calc(1.6rem - 1px),
-      #e9ecf0 calc(1.6rem - 1px),
-      #e9ecf0 1.6rem);
+      #c9b89540 calc(1.6rem - 1px),
+      #c9b89540 1.6rem);
   background-position: 0 0.75rem;
   line-height: 1.6rem;
   font-size: 0.88rem;
-  color: #374151;
-  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+  font-family: 'Noto Serif JP', serif;
   resize: none;
   outline: none;
   display: block;
@@ -736,8 +789,9 @@ h3 {
 }
 
 .notes-input::placeholder {
-  color: #c8d0db;
+  color: var(--ink-faint);
   font-style: italic;
+  opacity: 0.6;
 }
 
 .notes-placeholder-lines {
@@ -760,29 +814,30 @@ h3 {
   border-radius: 2px;
 }
 
-/* ── Nav Arrows ── */
+/* ── Nav Arrows — ink-stamp style ── */
 .nav-arrow {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1.5px solid #ddd;
-  background: #fff;
-  font-size: 1rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;          /* square-ish — traditional seal */
+  border: 1px solid var(--washi-deep);
+  background: var(--washi-dark);
+  font-size: 0.9rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
-  color: #555;
+  color: var(--ink-light);
+  font-family: 'Noto Serif JP', serif;
 }
 
 .nav-arrow:hover:not(:disabled) {
-  border-color: #aaa;
-  background: #f5f5f5;
-  transform: scale(1.08);
+  border-color: var(--vermillion);
+  color: var(--vermillion);
+  background: #fdf0ec;
 }
 
 .nav-arrow:disabled {
-  opacity: 0.35;
+  opacity: 0.3;
   cursor: not-allowed;
 }
